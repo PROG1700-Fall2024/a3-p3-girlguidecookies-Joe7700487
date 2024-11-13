@@ -14,17 +14,30 @@ def createTable():
     guide = [[],
              []]
     # ask for the number of guides    
-    numOfGuides = int(input("Enter the number of guides selling cookies: "))
+    numOfGuides = input("Enter the number of guides selling cookies: ")
+    if numOfGuides.isnumeric():
+        numOfGuides = int(numOfGuides)
+    # end the program early due to invalid input
+    else:
+        return 0
+        
     # loop for the amount of guides
     for i in range(numOfGuides):
         # loop twice for the two inputs
         for j in range(2):
             # if its the first iteration ask for the name
             if j == 0:
-                guide[j].append(input("Enter the name of guide #{0}: ".format(i + 1)))
+                guideName = input("Enter the name of guide #{0}: ".format(i + 1))
+                guide[j].append(guideName)
             # if its the second iteration ask for boxes sold 
             else:
-                guide[j].append(int(input("enter the number of boxes sold by {0}: ".format(guide[0][i]))))
+                guideSales = input("enter the number of boxes sold by {0}: ".format(guide[0][i]))
+                if guideSales.isnumeric():
+                    guide[j].append(int(guideSales))
+                # end the program early due to invalid input    
+                else:
+                    return 0
+
     return guide
 
 # PROCESS ------------------------------------------------------------------------------
@@ -60,7 +73,7 @@ def getPrizes(guide, average):
         elif guide[sales][i] > average:
             prize = "Super stellar sellar Badge"
         # if the sales are below the average but above 0
-        elif guide[sales][i] > 0:
+        elif guide[sales][i] > 0 and guide[sales][i] <= average:
             prize = "Left over cookies"
         # if the guide didnt sell any boxes
         elif guide[sales][i] == 0:
@@ -98,9 +111,7 @@ def outputResults(guide, average):
         # print all the data in the list in a table format
         print("     {:<10}  |  {:<5}  |  {:<20}".format(*row))
 
-
-
-
+# MAIN -------------------------------------------------------------------------------
 def main():
     # YOUR CODE STARTS HERE, each line must be indented (one tab)
     # Init variables
@@ -108,6 +119,10 @@ def main():
     sales = 1
     # Create table with guide names and sales
     guide = createTable()
+    # if an invalid input is given, end the program
+    if guide == 0:
+        print("Invalid input, try again.")
+        return
     # find the average sales between all guides
     average = getAverage(guide[sales])
     # add prizes to the guides table
