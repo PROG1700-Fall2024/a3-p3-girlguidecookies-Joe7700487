@@ -23,6 +23,7 @@ def createTable():
         
     # loop for the amount of guides
     for i in range(numOfGuides):
+        name = 0
         # loop twice for the two inputs
         for j in range(2):
             # if its the first iteration ask for the name
@@ -31,9 +32,11 @@ def createTable():
                 guide[j].append(guideName)
             # if its the second iteration ask for boxes sold 
             else:
-                guideSales = input("enter the number of boxes sold by {0}: ".format(guide[0][i]))
+                guideSales = input("enter the number of boxes sold by {0}: ".format(guide[name][i]))
+                # if the input is an int, conver data type to int
                 if guideSales.isnumeric():
                     guide[j].append(int(guideSales))
+                # if input is not an int, 
                 # end the program early due to invalid input    
                 else:
                     return 0
@@ -88,7 +91,7 @@ def getPrizes(guide, average):
 # display results to the user
 def outputResults(guide, average):
     # intro
-    print("The average number of boxes sold by each guide was {0:.1f}".format(average))
+    print("\nThe average number of boxes sold by each guide was {0:.1f}".format(average))
     # variables for readability
     name = 0
     sales = 1
@@ -109,7 +112,9 @@ def outputResults(guide, average):
     # cycle through each row in outputtable to be printed
     for row in outputTable:
         # print all the data in the list in a table format
+        #from: https://learnpython.com/blog/print-table-in-python/
         print("     {:<10}  |  {:<5}  |  {:<20}".format(*row))
+    print("\n")
 
 # MAIN -------------------------------------------------------------------------------
 def main():
